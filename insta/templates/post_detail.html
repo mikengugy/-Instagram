@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card_header">
+            <div class="profile_image">
+                <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+            </div>
+            <div class="post_info">
+                <div class="post_name">{{object.author}}</div>
+            </div>
+        </div>
+        <div class="post_image">
+            <img src="{{ object.image.url }}" class="img-responsive d-block img-thumbnail" alt="Image">
+        </div>
+        <div class="caption">
+            <h2>{{object.author}}</h2>
+            <span><p>{{object.caption}}</p></span>
+        </div>
+        <div class="time_posted">
+            {{ object.created_date | timesince }} ago
+        </div>
+        {% if object.author == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for post in posts %}
+        <div class="card">
+            <div class="card_header">
+                <div class="profile_image">
+                    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+                </div>
+                <div class="post_info">
+                    <div href="{% url 'profile' %}" class="post_name">{{post.author}}</div>
+                </div>
+            </div>
+            <div class="post_image">
+                {% if post.image %}
+                    <a href="{% url 'post-detail' post.id %}"><img src="{{ post.image.url }}" class="rex" alt="Image" ></a>  
+                {% endif %}
+            </div>
+            <div class="engage">
+                <a href="/like/{{post.id}}"><i class="far fa-heart" aria-hidden="true"></i></a>
+                <a href="{% url 'newComment' post.id %}"><i class="far fa-comment"></i></a>
+                <a href=""><i class="far fa-bookmark"></i></a>
+            </div>
+            <div class="caption">
+                <a href="{% url 'profile' %}"><h2>{{post.author}}</h2></a>
+                <span><p>{{post.caption}}</p></span>
+            </div>
+            <div class="time_posted">
+                {{ post.created_date | timesince }} ago
+            </div>
+            <div class="like">
+                <p></p>{{post.likes.count}} likes
+                <a href="{% url 'comments' post.id %}"><p> {{post.comment.count}} comment(s) </p></a> 
+            </div>        
+        </div>
+    {% endfor %}
+{% endblock %}
